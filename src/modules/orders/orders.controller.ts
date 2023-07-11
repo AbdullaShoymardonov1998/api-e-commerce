@@ -6,12 +6,12 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @ApiBearerAuth()
 @ApiTags('Orders')
-@Controller('api')
+@Controller('api/orders')
 @UseGuards(JwtAuthGuard)
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}
 
-  @Post('orders')
+  @Post()
   async createOrder(@Body() orderDetails: CreateOrdersDto) {
     return this.orderService.createOrders(orderDetails);
   }

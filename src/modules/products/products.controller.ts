@@ -14,7 +14,7 @@ import { CreateProductsDto } from './dto/create-product.dto';
 
 @ApiBearerAuth()
 @ApiTags('Products')
-@Controller('api')
+@Controller('api/products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -24,7 +24,7 @@ export class ProductsController {
     return this.productsService.getAllProducts();
   }
   @UsePipes(new ValidationPipe())
-  @Post('products')
+  @Post()
   @ApiOperation({ description: 'Create products' })
   createProducts(@Body() productsData: CreateProductsDto) {
     return this.productsService.createProducts(productsData);

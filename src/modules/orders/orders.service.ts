@@ -16,7 +16,9 @@ export class OrdersService {
       throw new HttpException('Product Id not found', HttpStatus.NOT_FOUND);
     }
 
-    if (product.quantity - orderDetails.quantity < 0) {
+    const updatedQuantity = product.quantity - orderDetails.quantity;
+
+    if (updatedQuantity < 0) {
       throw new HttpException(
         'Quantity is inefficient',
         HttpStatus.BAD_REQUEST,
@@ -33,7 +35,6 @@ export class OrdersService {
         quantity: orderDetails.quantity,
       },
     });
-    const updatedQuantity = product.quantity - orderDetails.quantity;
 
     await this.prisma.products.update({
       where: {
@@ -46,9 +47,7 @@ export class OrdersService {
 
     return {
       message: 'Success',
-      data: {
-        order,
-      },
+      data: order,
     };
   }
 }
